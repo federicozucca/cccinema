@@ -26,7 +26,7 @@ class Customer
     result = SqlRunner.run( sql )
   end
 
-  def update
+  def update()
     sql = "UPDATE customers SET (name) = ('#{@name}') WHERE id = (#{@id})"
     result = SqlRunner.run( sql )
   end
@@ -44,5 +44,10 @@ class Customer
     result = customer.map { customer| Customer.new(customer ) }
     return result
   end
+
+  def self.buy_tickets(funds)
+    update(funds)
+  end
+
 
 end
