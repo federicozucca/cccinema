@@ -2,7 +2,7 @@ require('pg')
 require('pry-byebug')
 require_relative("../db/sql_runner")
 require_relative('customer')
-require_relative('film')
+require_relative('ticket')
 
 class Ticket
 
@@ -46,4 +46,11 @@ class Ticket
     return result
   end
 
+  def issue_tickets(customer_id,film_id)
+    @customer_id.decrese_funds(film_id.price)
+    ticket = Ticket.new(customer_id,film_id)
+    ticket.save()
+    return ticket
+  end
+  
 end

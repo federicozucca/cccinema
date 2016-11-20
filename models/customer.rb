@@ -45,9 +45,9 @@ class Customer
     return result
   end
 
-  def self.buy_tickets(funds)
-    update(funds)
-  end
+  def self.decrese_funds(film_price)
+    @funds = @funds - film_price
 
+  end
 
 end
