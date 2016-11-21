@@ -45,4 +45,10 @@ class Film
     return result
   end
 
+  def number_of_customers()
+    sql = "SELECT count(film_id) FROM tickets WHERE film_id = #{@id};"
+    audit = SqlRunner.run(sql)
+    return audit[0].values
+  end
+
 end

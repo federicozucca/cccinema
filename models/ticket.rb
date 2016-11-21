@@ -7,16 +7,17 @@ require_relative('ticket')
 class Ticket
 
   attr_reader :id
-  attr_accessor :film_id, :customer_id 
+  attr_accessor :film_id, :customer_id, :film_time
 
   def initialize( options )
     @id = options['id'].to_i
     @film_id = options['film_id']
     @customer_id = options['customer_id']
+    @film_time = options['film_time']
   end
 
   def save()
-    sql = "INSERT INTO tickets (film_id , customer_id) VALUES ('#{ @film_id }', #{@customer_id}) RETURNING id"
+    sql = "INSERT INTO tickets (film_id , customer_id, film_time ) VALUES ('#{ @film_id }', #{@customer_id}, '#{film_time}') RETURNING id"
     ticket = SqlRunner.run( sql ).first
     @id = ticket['id'].to_i
   end
@@ -46,9 +47,19 @@ class Ticket
     return result
   end
 
-  def issue_tickets(customer_id,film_id)
-    @customer_id.decrese_funds(film_id.price)
-    ticket = Ticket.new(customer_id,film_id)
+  def most_popular_time()
+    sql = "SELECT film_time FROM tickets WHERE film_id = #{@id};"
+    result = SqlRunner.run(sql)
+    tickets_array = result.map{|ticket| Ticket.new(ticket)}
+    time_array = tickets_array{|ticket| ticket.film_time}
+
+
+
+  end
+
+  def self.issue_ticket(customer,film, film_time)
+    customer.decrease_funds(film)
+    ticket = Ticket.new({"customer_id" => customer.id,"film_id" => film.id, "film_time" => film_time})
     ticket.save()
     return ticket
   end

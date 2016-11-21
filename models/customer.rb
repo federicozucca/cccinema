@@ -45,9 +45,15 @@ class Customer
     return result
   end
 
-  def self.decrese_funds(film_price)
-    @funds = @funds - film_price
+  def decrease_funds(film)
+    @funds = @funds - film.price
+    update()
+  end
 
+  def number_of_tickets()
+    sql = "SELECT count(customer_id) FROM tickets WHERE customer_id = #{@id};"
+    tickets = SqlRunner.run(sql)
+    return tickets[0].values
   end
 
 end

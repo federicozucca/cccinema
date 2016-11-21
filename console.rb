@@ -28,6 +28,9 @@ customer4 = Customer.new({
   'funds' => 20
   })
 
+
+customer4.name = "Pippi"
+# customer4.update()
 customer1.save()
 customer2.save()
 customer3.save()
@@ -58,17 +61,41 @@ film2.save
 film3.save
 film4.save
 
-ticket1 = Ticket.new({ 'customer_id' => customer1.id, 'film_id' => film1.id})
 
-ticket2 = Ticket.new({ 'customer_id' => customer2.id, 'film_id' => film2.id})
+ticket1 = Ticket.new({ 
+  'customer_id' => customer1.id, 
+  'film_id' => film1.id,
+  'film_time'=>'19:00'})
 
-ticket3 = Ticket.new({ 'customer_id' => customer3.id, 'film_id' => film3.id})
+ticket2 = Ticket.new({ 
+  'customer_id' => customer2.id, 
+  'film_id' => film1.id, 
+  'film_time'=>'20:00'})
 
-ticket4 = Ticket.new({ 'customer_id' => customer4.id, 'film_id' => film1.id})
+ticket3 = Ticket.new({ 
+  'customer_id' => customer3.id, 
+  'film_id' => film1.id, 
+  'film_time'=>'21:30'})
+
+ticket4 = Ticket.new({ 
+  'customer_id' => customer4.id, 
+  'film_id' => film1.id,
+  'film_time'=> '21:00'})
+
+ticket5 = Ticket.new({ 
+  'customer_id' => customer2.id, 
+  'film_id' => film1.id,
+  'film_time'=> '19:00'})
+
 ticket1.save()
 ticket2.save()
 ticket3.save()
 ticket4.save()
+ticket5.save()
+
+# customer1.decrease_funds(film1)
+
+Ticket.issue_ticket(customer1,film1,'21:00')
 
 binding.pry
 nil
